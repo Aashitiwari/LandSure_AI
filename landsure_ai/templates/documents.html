@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LandSure AI - Upload Documents</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #173b2b;
+        }
+
+        .page {
+            max-width: 1150px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .header,
+        .upload-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .header {
+            padding: 25px;
+            margin-bottom: 22px;
+        }
+
+        .header h1 {
+            color: #12372a;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #667085;
+        }
+
+        .success-message {
+            background: #edf8ee;
+            border-left: 5px solid #43a047;
+            color: #176b35;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .error-message {
+            background: #fff0f0;
+            border-left: 5px solid #d64545;
+            color: #a32121;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .upload-card {
+            padding: 30px;
+        }
+
+        .upload-card h2 {
+            color: #12372a;
+            margin-bottom: 25px;
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            color: #344054;
+            margin-bottom: 8px;
+        }
+
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d0d5dd;
+            border-radius: 9px;
+            background: white;
+        }
+
+        .upload-area {
+            border: 2px dashed #a7d46f;
+            background: #f9fcf6;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+
+        .upload-area h3 {
+            color: #1f6b4d;
+            margin-bottom: 8px;
+        }
+
+        .hint {
+            color: #667085;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .upload-btn {
+            background: #1f6b4d;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 9px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .upload-btn:hover {
+            background: #15543b;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+            color: #1f6b4d;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page">
+
+    <div class="header">
+
+        <h1>📄 Upload Land Documents</h1>
+
+        <p>
+            Upload your land document, map and property photo.
+        </p>
+
+    </div>
+
+
+    {% if error %}
+
+    <div class="error-message">
+        ❌ {{ error }}
+    </div>
+
+    {% endif %}
+
+
+    <div class="upload-card">
+
+        <h2>Upload & Analyze</h2>
+
+        <form
+            action="/documents"
+            method="POST"
+            enctype="multipart/form-data"
+            onsubmit="showLoading()"
+        >
+
+            <div class="field">
+
+                <label for="document_type">
+                    Document Type
+                </label>
+
+                <select
+                    name="document_type"
+                    id="document_type"
+                >
+
+                    <option>Sale Deed / Registry</option>
+                    <option>Khasra / Khatauni</option>
+                    <option>Mutation Record</option>
+                    <option>Property Tax Receipt</option>
+                    <option>Land Revenue / Tax Receipt</option>
+                    <option>Encumbrance Certificate</option>
+                    <option>Land Map</option>
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="upload-area">
+
+                <h3>📄 Land Document</h3>
+
+                <p class="hint">
+                    Upload the main land document in PDF format.
+                </p>
+
+                <input
+                    type="file"
+                    name="document"
+                    accept=".pdf"
+                    required
+                >
+
+            </div>
+
+
+            <div class="upload-area">
+
+                <h3>🗺️ Land Map</h3>
+
+                <p class="hint">
+                    JPG, JPEG, PNG or PDF.
+                </p>
+
+                <input
+                    type="file"
+                    name="land_map"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                >
+
+            </div>
+
+
+            <div class="upload-area">
+
+                <h3>📷 Land Photo</h3>
+
+                <p class="hint">
+                    JPG, JPEG or PNG.
+                </p>
+
+                <input
+                    type="file"
+                    name="land_photo"
+                    accept=".jpg,.jpeg,.png"
+                >
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="upload-btn"
+            >
+                ⬆️ Upload & Continue
+            </button>
+
+
+            <div id="loading" class="loading">
+                ⏳ Uploading documents... Opening verification...
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+function showLoading() {
+
+    document.getElementById("loading").style.display = "block";
+
+}
+
+</script>
+
+</body>
+</html>

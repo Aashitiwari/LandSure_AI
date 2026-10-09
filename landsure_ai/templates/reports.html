@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LandSure AI - Report</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #173b2b;
+        }
+
+        .page {
+            max-width: 1250px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .header,
+        .report-card,
+        .section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .header {
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #12372a;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #667085;
+        }
+
+        .report-card {
+            padding: 28px;
+            margin-bottom: 20px;
+        }
+
+        .report-card h2 {
+            color: #12372a;
+            margin-bottom: 10px;
+        }
+
+        .report-card p {
+            color: #667085;
+            margin-bottom: 20px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: #1f6b4d;
+            color: white;
+            text-decoration: none;
+            padding: 14px 25px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .download-btn:hover {
+            background: #15543b;
+        }
+
+        .success-box {
+            margin-top: 18px;
+            background: #edf8ee;
+            border-left: 5px solid #43a047;
+            color: #176b35;
+            padding: 15px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .section {
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #12372a;
+            margin-bottom: 20px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .status-card {
+            background: #f8fafc;
+            border: 1px solid #e0e6ec;
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 110px;
+        }
+
+        .status-card h3 {
+            color: #243b53;
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            color: #16803c;
+            font-weight: bold;
+        }
+
+        .warning {
+            color: #b26a00;
+            font-weight: bold;
+        }
+
+        .neutral {
+            color: #1670b7;
+            font-weight: bold;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .detail {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .label {
+            color: #667085;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .value {
+            color: #12372a;
+            font-size: 15px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .duplicate {
+            margin-top: 20px;
+            background: #f8fafc;
+            border: 1px solid #e0e6ec;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .duplicate h3 {
+            color: #12372a;
+            margin-bottom: 12px;
+        }
+
+        .score {
+            margin-top: 10px;
+            color: #344054;
+        }
+
+        .notice {
+            background: #fff8e7;
+            border-left: 5px solid #e4a11b;
+            padding: 18px;
+            border-radius: 10px;
+            color: #6b4f00;
+        }
+
+        @media(max-width: 850px) {
+
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media(max-width: 600px) {
+
+            .status-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <div class="header">
+
+        <h1>📊 Land Verification Report</h1>
+
+        <p>
+            Review extracted land information and automated verification results.
+        </p>
+
+    </div>
+
+
+    {% if report_data %}
+
+
+    <div class="report-card">
+
+        <h2>📋 Land Verification Report</h2>
+
+        <p>
+            Automated analysis generated by LandSure AI
+        </p>
+
+
+        <a
+            href="/download_report"
+            class="download-btn"
+        >
+            ↓ Download Verification Report
+        </a>
+
+
+        <div class="success-box">
+            ✓ Report Generated Successfully
+        </div>
+
+    </div>
+
+
+    <!-- STATUS -->
+
+    <div class="section">
+
+        <h2>🔍 Verification Status</h2>
+
+
+        <div class="status-grid">
+
+
+            <div class="status-card">
+
+                <h3>📄 Land Document</h3>
+
+                <div class="success">
+                    ✓ Basic Verification Passed
+                </div>
+
+            </div>
+
+
+            <div class="status-card">
+
+                <h3>🗺️ Land Map</h3>
+
+                {% if report_data.get("Land Map", "").startswith("Uploaded") %}
+
+                    <div class="success">
+                        ✓ {{ report_data.get("Land Map") }}
+                    </div>
+
+                {% else %}
+
+                    <div class="neutral">
+                        ○ Not Uploaded
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="status-card">
+
+                <h3>📷 Land Photo</h3>
+
+                {% if report_data.get("Land Photo", "").startswith("Uploaded") %}
+
+                    <div class="success">
+                        ✓ {{ report_data.get("Land Photo") }}
+                    </div>
+
+                {% else %}
+
+                    <div class="neutral">
+                        ○ Not Uploaded
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="status-card">
+
+                <h3>🔎 Duplicate Check</h3>
+
+                {% if report_data.get("Duplicate Status") == "Possible Duplicate" %}
+
+                    <div class="warning">
+                        ⚠ Possible Duplicate
+                    </div>
+
+                {% elif report_data.get("Duplicate Status") == "No Matching Record" %}
+
+                    <div class="success">
+                        ✓ No Matching Record
+                    </div>
+
+                {% else %}
+
+                    <div class="neutral">
+                        ○ Not Checked
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="status-card">
+
+                <h3>📑 Registration</h3>
+
+                {% if report_data.get("Registration Status") %}
+
+                    <div class="success">
+                        ✓ {{ report_data.get("Registration Status") }}
+                    </div>
+
+                {% else %}
+
+                    <div class="neutral">
+                        ○ Information Not Found
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="status-card">
+
+                <h3>🏠 Property Type</h3>
+
+                {% if report_data.get("Property Type") %}
+
+                    <div class="success">
+                        ✓ {{ report_data.get("Property Type") }}
+                    </div>
+
+                {% else %}
+
+                    <div class="neutral">
+                        ○ Not Available
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- DETAILS -->
+
+    <div class="section">
+
+        <h2>🏠 Extracted Property Information</h2>
+
+
+        <div class="details-grid">
+
+
+            {% for key, value in report_data.items() %}
+
+                {% if key not in [
+                    "Land Map",
+                    "Land Photo",
+                    "Duplicate Status",
+                    "Duplicate Score"
+                ] %}
+
+                    <div class="detail">
+
+                        <div class="label">
+                            {{ key }}
+                        </div>
+
+                        <div class="value">
+                            {{ value if value else "Not Available" }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <div class="duplicate">
+
+            <h3>🔎 Duplicate Screening</h3>
+
+
+            {% if report_data.get("Duplicate Status") == "Possible Duplicate" %}
+
+                <div class="warning">
+                    ⚠ Possible Duplicate
+                </div>
+
+            {% elif report_data.get("Duplicate Status") == "No Matching Record" %}
+
+                <div class="success">
+                    ✓ No Matching Record
+                </div>
+
+            {% else %}
+
+                <div class="neutral">
+                    ○ Not Checked
+                </div>
+
+            {% endif %}
+
+
+            <div class="score">
+
+                Duplicate Score:
+
+                <strong>
+                    {{ report_data.get("Duplicate Score", 0) }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <strong>⚠ Prototype Notice:</strong>
+
+        LandSure AI performs basic automated document analysis
+        and duplicate screening for demonstration purposes.
+        It does not replace official government land-record
+        verification or legal authentication.
+
+    </div>
+
+
+    {% else %}
+
+
+    <div class="section">
+
+        <h2>📋 No Report Available</h2>
+
+        <p>
+            Please upload and verify a land document first.
+        </p>
+
+    </div>
+
+
+    {% endif %}
+
+
+</div>
+
+</body>
+</html>

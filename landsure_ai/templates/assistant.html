@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Assistant | LandSure AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #17372b;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1000px;
+            margin: 35px auto;
+        }
+
+        /* Header */
+
+        .header {
+            background: #12372a;
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #d9eadf;
+            line-height: 1.5;
+        }
+
+        /* Assistant Card */
+
+        .assistant-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .assistant-icon {
+            width: 65px;
+            height: 65px;
+            background: #e5f3e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 18px;
+        }
+
+        .assistant-card h2 {
+            color: #12372a;
+            margin-bottom: 8px;
+        }
+
+        .assistant-card .subtitle {
+            color: #6b7c72;
+            margin-bottom: 25px;
+        }
+
+        /* Question Form */
+
+        .question-form {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .question-form input {
+            flex: 1;
+            padding: 15px 17px;
+            border: 1px solid #ccd9d1;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .question-form input:focus {
+            border-color: #1f6b4d;
+        }
+
+        .question-form button {
+            padding: 14px 22px;
+            border: none;
+            border-radius: 12px;
+            background: #1f6b4d;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .question-form button:hover {
+            background: #12372a;
+        }
+
+        /* Answer */
+
+        .answer-box {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f0f8f3;
+            border-left: 5px solid #1f6b4d;
+            border-radius: 12px;
+            line-height: 1.7;
+        }
+
+        .answer-label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #1f6b4d;
+            margin-bottom: 8px;
+        }
+
+        /* Suggested Questions */
+
+        .suggestions {
+            margin-top: 30px;
+        }
+
+        .suggestions h3 {
+            margin-bottom: 15px;
+            color: #12372a;
+        }
+
+        .suggestion-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .suggestion {
+            padding: 10px 14px;
+            background: #f5f8f6;
+            border: 1px solid #d7e3db;
+            border-radius: 20px;
+            color: #315746;
+            font-size: 13px;
+        }
+
+        /* Disclaimer */
+
+        .note {
+            margin-top: 25px;
+            padding: 15px;
+            background: #fff8e5;
+            border-left: 5px solid #d8a928;
+            border-radius: 10px;
+            color: #705a16;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Mobile */
+
+        @media(max-width: 700px) {
+
+            .question-form {
+                flex-direction: column;
+            }
+
+            .question-form button {
+                width: 100%;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <div class="header">
+
+        <h1>🤖 LandSure AI Assistant</h1>
+
+        <p>
+            Ask questions about land-document verification,
+            extracted information and the LandSure AI project.
+        </p>
+
+    </div>
+
+
+    <!-- Assistant -->
+
+    <div class="assistant-card">
+
+        <div class="assistant-icon">
+            🤖
+        </div>
+
+        <h2>How can I help you?</h2>
+
+        <p class="subtitle">
+            Ask a question related to land documents or verification.
+        </p>
+
+
+        <!-- Question Form -->
+
+        <form
+            method="POST"
+            action="/assistant"
+            class="question-form"
+        >
+
+            <input
+                type="text"
+                name="question"
+                placeholder="Example: What is a Khasra Number?"
+                required
+            >
+
+            <button type="submit">
+                Ask AI
+            </button>
+
+        </form>
+
+
+        <!-- Answer -->
+
+        {% if answer %}
+
+        <div class="answer-box">
+
+            <div class="answer-label">
+                LANDSure AI RESPONSE
+            </div>
+
+            <div>
+                {{ answer }}
+            </div>
+
+        </div>
+
+        {% endif %}
+
+
+        <!-- Suggested Questions -->
+
+        <div class="suggestions">
+
+            <h3>Try asking:</h3>
+
+            <div class="suggestion-list">
+
+                <div class="suggestion">
+                    What is Khasra Number?
+                </div>
+
+                <div class="suggestion">
+                    How does verification work?
+                </div>
+
+                <div class="suggestion">
+                    What is a Survey Number?
+                </div>
+
+                <div class="suggestion">
+                    What information is extracted?
+                </div>
+
+                <div class="suggestion">
+                    Is this government verification?
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Disclaimer -->
+
+        <div class="note">
+
+            <strong>Note:</strong>
+            This assistant provides information about the
+            LandSure AI prototype and basic document analysis.
+            It does not provide legal advice or official
+            government verification.
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

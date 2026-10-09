@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LandSure AI | Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #24323d;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 245px;
+            background: #12372a;
+            color: white;
+            padding: 25px 18px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 23px;
+            font-weight: bold;
+            padding: 0 10px 30px;
+        }
+
+        .brand-icon {
+            background: #a7d46f;
+            color: #12372a;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            color: #aabdb4;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 15px 10px 10px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 13px 12px;
+            border-radius: 10px;
+            margin-bottom: 6px;
+            color: #dce8e2;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #1f6b4d;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 25px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .sidebar-bottom {
+            position: absolute;
+            bottom: 25px;
+            left: 18px;
+            right: 18px;
+        }
+
+        .prototype {
+            background: rgba(167, 212, 111, 0.12);
+            border: 1px solid rgba(167, 212, 111, 0.25);
+            border-radius: 12px;
+            padding: 13px;
+            font-size: 11px;
+            color: #cbd9d1;
+            line-height: 1.5;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 245px;
+            width: calc(100% - 245px);
+            padding: 22px 30px 35px;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            color: #12372a;
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+        .welcome p {
+            color: #75818a;
+            font-size: 13px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search {
+            background: white;
+            border: 1px solid #e4e9ed;
+            border-radius: 10px;
+            padding: 11px 15px;
+            width: 210px;
+            outline: none;
+        }
+
+        .profile {
+            background: white;
+            border: 1px solid #e4e9ed;
+            padding: 9px 13px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .profile-icon {
+            width: 32px;
+            height: 32px;
+            background: #dfeecb;
+            color: #12372a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background: linear-gradient(
+                115deg,
+                #12372a,
+                #1f6b4d
+            );
+
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            min-height: 245px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .hero-content {
+            max-width: 570px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(167, 212, 111, 0.18);
+            border: 1px solid rgba(167, 212, 111, 0.4);
+            color: #d7f0b6;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            margin-bottom: 13px;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            line-height: 1.15;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            color: #d7e4de;
+            line-height: 1.6;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .hero-button {
+            display: inline-block;
+            background: #a7d46f;
+            color: #12372a;
+            padding: 12px 19px;
+            border-radius: 9px;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .hero-visual {
+            width: 310px;
+            height: 190px;
+            position: relative;
+            margin-right: 30px;
+        }
+
+        /* House */
+
+        .house {
+            position: absolute;
+            bottom: 24px;
+            right: 55px;
+            width: 125px;
+            height: 85px;
+            background: #eef5e8;
+            border-radius: 5px;
+        }
+
+        .roof {
+            position: absolute;
+            top: -53px;
+            left: -15px;
+            width: 0;
+            height: 0;
+            border-left: 78px solid transparent;
+            border-right: 78px solid transparent;
+            border-bottom: 58px solid #a7d46f;
+        }
+
+        .door {
+            position: absolute;
+            bottom: 0;
+            left: 49px;
+            width: 28px;
+            height: 49px;
+            background: #1f6b4d;
+            border-radius: 4px 4px 0 0;
+        }
+
+        .window {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #b7dce0;
+            border: 3px solid #12372a;
+            top: 25px;
+        }
+
+        .window.left {
+            left: 14px;
+        }
+
+        .window.right {
+            right: 14px;
+        }
+
+        /* Land */
+
+        .land {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 75px;
+            background: #a7d46f;
+            border-radius: 50% 50% 0 0;
+            transform: rotate(-2deg);
+        }
+
+        .land-line {
+            position: absolute;
+            bottom: 27px;
+            left: 20px;
+            width: 160px;
+            height: 2px;
+            background: rgba(18,55,42,0.35);
+            transform: rotate(-7deg);
+        }
+
+        .tree {
+            position: absolute;
+            bottom: 50px;
+            left: 30px;
+            font-size: 45px;
+        }
+
+        .hero-circle {
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            border-radius: 50%;
+            background: rgba(167,212,111,0.08);
+            right: -50px;
+            top: -65px;
+        }
+
+        /* ================= STATS ================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e8edf0;
+            border-radius: 14px;
+            padding: 18px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.035);
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #eef5e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+        }
+
+        .stat-card h3 {
+            font-size: 24px;
+            color: #12372a;
+            margin-top: 13px;
+        }
+
+        .stat-card p {
+            font-size: 12px;
+            color: #78848c;
+            margin-top: 4px;
+        }
+
+        .stat-change {
+            color: #3b8a4a;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* ================= MODULES ================= */
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 13px;
+        }
+
+        .section-title h2 {
+            color: #12372a;
+            font-size: 19px;
+        }
+
+        .section-title span {
+            font-size: 12px;
+            color: #76828a;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .module-card {
+            background: white;
+            border: 1px solid #e8edf0;
+            border-radius: 14px;
+            padding: 20px;
+            transition: 0.2s;
+        }
+
+        .module-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.07);
+        }
+
+        .module-icon {
+            width: 47px;
+            height: 47px;
+            border-radius: 12px;
+            background: #eef5e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 14px;
+        }
+
+        .module-card h3 {
+            color: #12372a;
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+        .module-card p {
+            color: #7b858d;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .module-link {
+            color: #1f6b4d;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ================= BOTTOM ================= */
+
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 1.35fr 1fr;
+            gap: 18px;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #e8edf0;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .activity {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 0;
+            border-bottom: 1px solid #edf0f2;
+        }
+
+        .activity:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: #eef5e8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .activity-text strong {
+            display: block;
+            color: #34434d;
+            font-size: 13px;
+        }
+
+        .activity-text span {
+            color: #89939a;
+            font-size: 11px;
+        }
+
+        .status-box {
+            margin-top: 15px;
+            background: #f7faf5;
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 12px;
+        }
+
+        .status-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-good {
+            color: #318144;
+            font-weight: bold;
+        }
+
+        .status-info {
+            color: #2875a7;
+            font-weight: bold;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 1100px) {
+
+            .stats,
+            .modules {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-visual {
+                opacity: 0.7;
+            }
+        }
+
+        @media(max-width: 800px) {
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .layout {
+                display: block;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 18px;
+            }
+
+            .sidebar-bottom {
+                position: static;
+                margin-top: 20px;
+            }
+
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .top-actions {
+                width: 100%;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            .hero {
+                padding: 24px;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 550px) {
+
+            .stats,
+            .modules {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- =================================================
+         SIDEBAR
+         ================================================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🌿
+            </div>
+
+            <span>LandSure AI</span>
+
+        </div>
+
+
+        <div class="menu-title">
+            Main Menu
+        </div>
+
+
+        <a href="/" class="nav-link active">
+
+            <span class="nav-icon">⌂</span>
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/documents" class="nav-link">
+
+            <span class="nav-icon">📄</span>
+
+            Upload Documents
+
+        </a>
+
+
+        <a href="/verification" class="nav-link">
+
+            <span class="nav-icon">🔍</span>
+
+            Verification
+
+        </a>
+
+
+        <a href="/reports" class="nav-link">
+
+            <span class="nav-icon">📊</span>
+
+            Reports
+
+        </a>
+
+
+        <a href="/assistant" class="nav-link">
+
+            <span class="nav-icon">🤖</span>
+
+            AI Assistant
+
+        </a>
+
+
+        <div class="menu-title">
+            System
+        </div>
+
+
+        <a href="/documents" class="nav-link">
+
+            <span class="nav-icon">🗺</span>
+
+            Land Records
+
+        </a>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="prototype">
+
+                <strong>Prototype Mode</strong>
+
+                <br>
+
+                LandSure AI is a college project
+                demonstrating automated land-document
+                analysis.
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =================================================
+         MAIN CONTENT
+         ================================================= -->
+
+    <main class="main">
+
+
+        <!-- TOP BAR -->
+
+        <div class="topbar">
+
+            <div class="welcome">
+
+                <h2>
+                    Good Afternoon, Aashi 👋
+                </h2>
+
+                <p>
+                    Welcome to your LandSure AI verification dashboard.
+                </p>
+
+            </div>
+
+
+            <div class="top-actions">
+
+                <input
+                    type="text"
+                    class="search"
+                    placeholder="Search..."
+                >
+
+
+                <div class="profile">
+
+                    <div class="profile-icon">
+                        A
+                    </div>
+
+                    Aashi Tiwari
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             HERO
+             ================================================= -->
+
+        <section class="hero">
+
+            <div class="hero-content">
+
+                <div class="hero-tag">
+                    AI-Powered Land Document Analysis
+                </div>
+
+
+                <h1>
+                    Verify Land Documents
+                    with AI Precision
+                </h1>
+
+
+                <p>
+                    Upload land documents, extract important
+                    property information, perform basic
+                    duplicate screening and generate a
+                    structured verification report.
+                </p>
+
+
+                <a
+                    href="/documents"
+                    class="hero-button"
+                >
+                    + Start Verification
+                </a>
+
+            </div>
+
+
+            <div class="hero-visual">
+
+                <div class="hero-circle"></div>
+
+                <div class="tree">
+                    🌳
+                </div>
+
+                <div class="land"></div>
+
+                <div class="land-line"></div>
+
+
+                <div class="house">
+
+                    <div class="roof"></div>
+
+                    <div class="window left"></div>
+
+                    <div class="window right"></div>
+
+                    <div class="door"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             STAT CARDS
+             ================================================= -->
+
+        <div class="stats">
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        📄
+                    </div>
+
+                    <span class="stat-change">
+                        Active
+                    </span>
+
+                </div>
+
+                <h3>01</h3>
+
+                <p>
+                    Document Processing
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        🔍
+                    </div>
+
+                    <span class="stat-change">
+                        Ready
+                    </span>
+
+                </div>
+
+                <h3>AI</h3>
+
+                <p>
+                    Verification Engine
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        🗺
+                    </div>
+
+                    <span class="stat-change">
+                        Supported
+                    </span>
+
+                </div>
+
+                <h3>3</h3>
+
+                <p>
+                    Land File Types
+                </p>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-top">
+
+                    <div class="stat-icon">
+                        🔒
+                    </div>
+
+                    <span class="stat-change">
+                        Local
+                    </span>
+
+                </div>
+
+                <h3>DB</h3>
+
+                <p>
+                    Prototype Record Storage
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             MODULES
+             ================================================= -->
+
+        <div class="section-title">
+
+            <h2>
+                LandSure AI Modules
+            </h2>
+
+            <span>
+                Quick access
+            </span>
+
+        </div>
+
+
+        <div class="modules">
+
+
+            <!-- Upload -->
+
+            <a href="/documents">
+
+                <div class="module-card">
+
+                    <div class="module-icon">
+                        📄
+                    </div>
+
+                    <h3>
+                        Document Upload
+                    </h3>
+
+                    <p>
+                        Upload land documents,
+                        maps and supporting photos.
+                    </p>
+
+                    <span class="module-link">
+                        Open Module →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- Verification -->
+
+            <a href="/verification">
+
+                <div class="module-card">
+
+                    <div class="module-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        Verification
+                    </h3>
+
+                    <p>
+                        Extract land information
+                        and perform basic checks.
+                    </p>
+
+                    <span class="module-link">
+                        Verify Document →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- Reports -->
+
+            <a href="/reports">
+
+                <div class="module-card">
+
+                    <div class="module-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Verification Reports
+                    </h3>
+
+                    <p>
+                        View extracted information
+                        and download reports.
+                    </p>
+
+                    <span class="module-link">
+                        View Reports →
+                    </span>
+
+                </div>
+
+            </a>
+
+
+            <!-- Assistant -->
+
+            <a href="/assistant">
+
+                <div class="module-card">
+
+                    <div class="module-icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        AI Assistant
+                    </h3>
+
+                    <p>
+                        Ask questions about land
+                        documents and terminology.
+                    </p>
+
+                    <span class="module-link">
+                        Ask AI →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- =================================================
+             BOTTOM PANELS
+             ================================================= -->
+
+        <div class="bottom-grid">
+
+
+            <!-- Recent Activity -->
+
+            <div class="panel">
+
+                <div class="section-title">
+
+                    <h2>
+                        Recent Activity
+                    </h2>
+
+                    <span>
+                        Prototype
+                    </span>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        📄
+                    </div>
+
+                    <div class="activity-text">
+
+                        <strong>
+                            Land document processing
+                        </strong>
+
+                        <span>
+                            PDF text extraction enabled
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        🔎
+                    </div>
+
+                    <div class="activity-text">
+
+                        <strong>
+                            Duplicate screening
+                        </strong>
+
+                        <span>
+                            Khasra, Survey and owner details compared
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        🗺
+                    </div>
+
+                    <div class="activity-text">
+
+                        <strong>
+                            Land map support
+                        </strong>
+
+                        <span>
+                            PDF, JPG, JPEG and PNG supported
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="activity">
+
+                    <div class="activity-icon">
+                        🤖
+                    </div>
+
+                    <div class="activity-text">
+
+                        <strong>
+                            AI Assistant
+                        </strong>
+
+                        <span>
+                            Land-related questions supported
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- System Status -->
+
+            <div class="panel">
+
+                <div class="section-title">
+
+                    <h2>
+                        System Status
+                    </h2>
+
+                    <span>
+                        Live
+                    </span>
+
+                </div>
+
+
+                <div class="status-box">
+
+
+                    <div class="status-row">
+
+                        <span>
+                            Document Processing
+                        </span>
+
+                        <span class="status-good">
+                            ● Active
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span>
+                            PDF Extraction
+                        </span>
+
+                        <span class="status-good">
+                            ● Active
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span>
+                            Duplicate Screening
+                        </span>
+
+                        <span class="status-good">
+                            ● Active
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span>
+                            SQLite Database
+                        </span>
+
+                        <span class="status-good">
+                            ● Active
+                        </span>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span>
+                            AI Assistant
+                        </span>
+
+                        <span class="status-info">
+                            ● Ready
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

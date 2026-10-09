@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>LandSure AI - Verification</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #173b2b;
+        }
+
+        .page {
+            max-width: 1200px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        .header,
+        .result,
+        .section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+        }
+
+        .header {
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #12372a;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #667085;
+        }
+
+        .result {
+            padding: 22px;
+            margin-bottom: 20px;
+            border-left: 5px solid #43a047;
+            background: #edf8ee;
+        }
+
+        .result h2 {
+            color: #176b35;
+            margin-bottom: 8px;
+        }
+
+        .result p {
+            color: #344054;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .status-card {
+            background: white;
+            border: 1px solid #e0e6ec;
+            border-radius: 14px;
+            padding: 20px;
+            min-height: 115px;
+        }
+
+        .status-card h3 {
+            font-size: 15px;
+            color: #243b53;
+            margin-bottom: 15px;
+        }
+
+        .success {
+            color: #16803c;
+            font-weight: bold;
+        }
+
+        .warning {
+            color: #b26a00;
+            font-weight: bold;
+        }
+
+        .neutral {
+            color: #1670b7;
+            font-weight: bold;
+        }
+
+        .section {
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            color: #12372a;
+            margin-bottom: 20px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .detail {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 17px;
+        }
+
+        .label {
+            font-size: 13px;
+            color: #667085;
+            margin-bottom: 7px;
+        }
+
+        .value {
+            font-size: 15px;
+            color: #12372a;
+            font-weight: bold;
+        }
+
+        .next-box {
+            margin-top: 25px;
+            text-align: center;
+            background: #f9fcf6;
+            border: 1px solid #cfe5bd;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .next-box p {
+            color: #667085;
+            margin-bottom: 12px;
+        }
+
+        .loader {
+            color: #1f6b4d;
+            font-weight: bold;
+        }
+
+        .disclaimer {
+            background: #fff8e7;
+            border-left: 5px solid #e4a11b;
+            padding: 18px;
+            border-radius: 10px;
+            color: #6b4f00;
+        }
+
+        @media(max-width: 900px) {
+
+            .status-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media(max-width: 600px) {
+
+            .status-grid,
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <div class="header">
+
+        <h1>🔍 Land Document Verification</h1>
+
+        <p>
+            LandSure AI is analyzing the uploaded document.
+        </p>
+
+    </div>
+
+
+    <div class="result">
+
+        <h2>✅ Verification Result</h2>
+
+        <p>
+            {{ result }}
+        </p>
+
+    </div>
+
+
+    <div class="status-grid">
+
+
+        <!-- DOCUMENT -->
+
+        <div class="status-card">
+
+            <h3>📄 Land Document</h3>
+
+            <div class="success">
+                ✓ Basic Verification Passed
+            </div>
+
+        </div>
+
+
+        <!-- MAP -->
+
+        <div class="status-card">
+
+            <h3>🗺️ Land Map</h3>
+
+            {% if details.get("Land Map", "").startswith("Uploaded") %}
+
+                <div class="success">
+                    ✓ {{ details.get("Land Map") }}
+                </div>
+
+            {% else %}
+
+                <div class="neutral">
+                    ○ Not Uploaded
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- PHOTO -->
+
+        <div class="status-card">
+
+            <h3>📷 Land Photo</h3>
+
+            {% if details.get("Land Photo", "").startswith("Uploaded") %}
+
+                <div class="success">
+                    ✓ {{ details.get("Land Photo") }}
+                </div>
+
+            {% else %}
+
+                <div class="neutral">
+                    ○ Not Uploaded
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- DUPLICATE -->
+
+        <div class="status-card">
+
+            <h3>🔎 Duplicate Check</h3>
+
+            {% if details.get("Duplicate Status") == "Possible Duplicate" %}
+
+                <div class="warning">
+                    ⚠ Possible Duplicate
+                </div>
+
+            {% elif details.get("Duplicate Status") == "No Matching Record" %}
+
+                <div class="success">
+                    ✓ No Matching Record
+                </div>
+
+            {% else %}
+
+                <div class="neutral">
+                    ○ Not Checked
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <h2>🏠 Extracted Property Details</h2>
+
+
+        <div class="details-grid">
+
+            {% for key, value in details.items() %}
+
+                {% if key not in [
+                    "Land Map",
+                    "Land Photo",
+                    "Duplicate Status",
+                    "Duplicate Score"
+                ] %}
+
+                    <div class="detail">
+
+                        <div class="label">
+                            {{ key }}
+                        </div>
+
+                        <div class="value">
+                            {{ value if value else "Not Available" }}
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+
+        </div>
+
+
+        <div class="next-box">
+
+            <p>
+                Verification complete. Your report is being prepared.
+            </p>
+
+            <div class="loader">
+                📊 Opening Land Verification Report...
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="disclaimer">
+
+        <strong>⚠ Prototype Notice:</strong>
+
+        LandSure AI performs basic automated document analysis
+        for demonstration purposes. It does not replace official
+        government land-record verification or legal authentication.
+
+    </div>
+
+
+</div>
+
+
+<!-- AUTOMATIC REPORT OPEN -->
+
+{% if auto_report %}
+
+<script>
+
+    setTimeout(function () {
+
+        window.location.href = "/reports";
+
+    }, 3000);
+
+</script>
+
+{% endif %}
+
+
+</body>
+
+</html>
